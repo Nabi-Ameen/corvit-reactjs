@@ -3,7 +3,9 @@
 const CustomCoponent = ()=>{
     return(
         <div>
-            CustomCoponent
+            <p>lorem10</p>
+            <p>lorem10</p>
+            <p>lorem10</p>
         </div>
     )
 }
