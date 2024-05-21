@@ -1,5 +1,3 @@
-
-
 const CustomCoponent = ()=>{
     return(
         <div>
