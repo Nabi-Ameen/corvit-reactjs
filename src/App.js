@@ -5,6 +5,7 @@ import kfc2 from "./images/kfc2.png";
 import kfc3 from "./images/kfc3.png";
 import kfc4 from "./images/kfc4.png"
 import Button from "./components/Button";
+import Tabe1 from "./components/Tabe1";
 
 function App() {
 
@@ -33,13 +34,71 @@ function App() {
   // ]
 
 
-  const [isLoggin, setIsLogin] = useState(true)
+  // const [isLoggin, setIsLogin] = useState(true)
 
-  const [content, setContent] = useState("itemone")
+  const [content, setContent] = useState("tabe1")
+
+
+  const tabs = [
+    {
+      id: 1,
+      tabeName: "tabe1"
+    },
+    {
+      id: 2,
+      tabeName: "tabe2"
+    },
+    {
+      id: 3,
+      tabeName: "tabe3"
+    },
+    {
+      id: 4,
+      tabeName: "tabe4"
+    }
+  ]
+
+
+  const tabeContent = {
+    "tabe1": <Tabe1 />,
+    "tabe2": <div>ITEM 2 CONTENT</div>,
+    "tabe3": <div>ITEM 3 CONTENT</div>,
+    "tabe4": <div>ITEM 4 CONTENT</div>
+  }
+
   return (
     <div>
-      <div className="">
-        <div className="flex gap-5 border-b-2 w-1/2">
+      <div className="flex">
+        {
+          tabs?.map((tab, index) => {
+            return (
+              <>
+                <div className={`${content === tab?.tabeName ? "text-blue-500 border-b-2 border-blue-800" : ""} p-5`} onClick={() => setContent(tab.tabeName)} >{tab?.tabeName}</div>
+              </>
+            )
+          })
+        }
+
+      </div>
+
+        <div>{tabeContent[content]}</div>
+
+
+
+
+      {/* {
+        content === "tabe1" && 
+      }
+
+      {
+        content === "tabe2" && <div>ITEM 2 CONTENT</div>
+      }
+
+      {
+        content === "tabe3" && <div>ITEM 3 CONTENT</div>
+      }  */}
+
+      {/* <div className="flex gap-5 border-b-2 w-1/2">
           <div className={`${content === "itemone" ? "text-blue-500 border-b-2 border-blue-800" : "" } p-5`} onClick={() => setContent("itemone")}>ITEM ONE</div>
           <div className={`${content === "itemtwo" ? "text-blue-500 border-b-2 border-blue-800" : "" } p-5`} onClick={() => setContent("itemtwo")}>ITEM TWO</div>
           <div className={`${content === "itemthree" ? "text-blue-500 border-b-2 border-blue-800" : "" } p-5`} onClick={() => setContent("itemthree")}>ITEM THREE</div>
@@ -55,14 +114,14 @@ function App() {
 
       {
         content === "itemthree" && <div>ITEM 3 CONTENT</div>
-      }
+      } */}
 
 
-      <Button button= "fill"/>
-      <Button button = "outline"/>
+      {/* <Button button= "fill"/>
+      <Button button = "outline"/> */}
 
 
-      
+
 
 
 
