@@ -10,6 +10,11 @@ const FormHandling = () => {
         }
     )
 
+    const [error, setError] = useState({
+        userName: "",
+        email: "",
+    })
+
     const handleQualification = (e) => {
         const { value } = e.target
         if (e.target.checked) {
@@ -28,7 +33,20 @@ const FormHandling = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log("person", person)
+
+        const validation = {}
+        if (person.userName === "") {
+            validation.userName = "userName Required"
+        }
+        if (person.email === "") {
+            validation.email = "Email Required"
+        }
+
+        setError(validation)
+
+        if(Object.keys(validation).length === 0) {
+            console.log("person", person)
+        }
     }
 
     return (
@@ -37,11 +55,13 @@ const FormHandling = () => {
                 <div>
                     <label htmlFor="userName">User Name</label>
                     <input type='text' id='userName' onChange={(e) => setPerson({ ...person, userName: e.target.value })} className='ml-4 border border-gray-700 w-96 p-2' />
+                    {error?.userName ? <p className='text-red-500'>{error?.userName}</p> : <></>}
                 </div>
 
                 <div>
                     <label htmlFor="userName">Email</label>
                     <input type='text' onChange={(e) => setPerson({ ...person, email: e.target.value })} id='Email' className='ml-14 mt-4 border border-gray-700 w-96 p-2' />
+                    {error?.email ? <p className='text-red-500'>{error?.email}</p> : <></>}
                 </div>
 
                 <div className='flex items-center mt-10 pl-20'>
