@@ -8,13 +8,15 @@ import Button from "./components/Button";
 import Tabe1 from "./components/Tabe1";
 import FormHandling from "./components/FormHandling";
 import Form from "./components/Form";
+import FormikForm from "./components/formik/FormikForm";
 
 function App() {
 
   return (
     <div>
-      <FormHandling/>
+      {/* <FormHandling/> */}
       {/* <Form/> */}
+      <FormikForm/>
     </div>
   );
 }
