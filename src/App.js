@@ -9,6 +9,7 @@ import Tabe1 from "./components/Tabe1";
 import FormHandling from "./components/FormHandling";
 import Form from "./components/Form";
 import FormikForm from "./components/formik/FormikForm";
+import FieldArrays from "./components/formik/FieldArray";
 
 function App() {
 
@@ -16,7 +17,8 @@ function App() {
     <div>
       {/* <FormHandling/> */}
       {/* <Form/> */}
-      <FormikForm/>
+      {/* <FormikForm/> */}
+      <FieldArrays/>
     </div>
   );
 }
