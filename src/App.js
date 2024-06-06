@@ -10,15 +10,29 @@ import FormHandling from "./components/FormHandling";
 import Form from "./components/Form";
 import FormikForm from "./components/formik/FormikForm";
 import FieldArrays from "./components/formik/FieldArray";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import AboutUs from "./pages/AboutUs";
+import ContactUs from "./pages/ContactUs";
+import Layout from "./components/Layout";
 
 function App() {
 
   return (
     <div>
-      {/* <FormHandling/> */}
-      {/* <Form/> */}
-      {/* <FormikForm/> */}
-      <FieldArrays/>
+      {/* <FormHandling/>
+      <Form/>
+      <FormikForm/>
+      <FieldArrays/> */}
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout/>}>
+            <Route path="/" element={<Home />} />
+            <Route path="/aboutus" element={<AboutUs />} />
+            <Route path="/contactus" element={<ContactUs />} />
+          </Route>
+        </Routes>
+      </Router>
     </div>
   );
 }
