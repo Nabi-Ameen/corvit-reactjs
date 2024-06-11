@@ -16,6 +16,7 @@ import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 import Layout from "./components/Layout";
 import PageNotFound from "./pages/PageNotFound";
+import ProductDetails from "./pages/ProductDetails";
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/details/:id" element={<ProductDetails />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     )
