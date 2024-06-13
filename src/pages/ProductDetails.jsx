@@ -5,9 +5,6 @@ import { products } from '../utils/productlist';
 const ProductDetails = () => {
 
   const {id} = useParams();
-
-  console.log("id", id)
-
   const findProduct = products?.find((product)=> product?.id === parseInt(id) )
 
   return (

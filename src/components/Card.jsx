@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Card = ({ product }) => {
-    let {id, image, description, price, title } = product
+    let { id, image, description, price, title } = product
 
     return (
         <Link to={`details/${id}`}>
@@ -13,7 +13,6 @@ const Card = ({ product }) => {
                 <div className='flex items-center p-[13px] text-white space-y-3'>
                     <div className='text-lg font-bold'>{title}</div>
                     <div>{price}</div>
-
                 </div>
                 <button className='bg-red-500 text-white text-lg font-semibold p-2 rounded-md hover:bg-white hover:text-black hover:border-2 hover:border-red-500'>+ ADD TO BUCKET</button>
             </div>

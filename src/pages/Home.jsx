@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { products } from '../utils/productlist'
 import Card from '../components/Card'
+import axios from 'axios'
 
 const Home = () => {
-
     const [product, setProduct] = useState([])
-
+    const getData = async()=>{
+       const res = await axios.get("https://fakestoreapi.com/products")
+       setProduct(res.data)
+    }
     useEffect(()=>{
-        fetch("https://fakestoreapi.com/products").then((res) => res.json()).then((res) => setProduct(res))
+            getData()
     },[])
+
 
     return (
         <div className='flex flex-wrap gap-6'>
