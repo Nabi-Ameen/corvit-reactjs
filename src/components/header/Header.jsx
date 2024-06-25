@@ -18,6 +18,10 @@ const Header = () => {
         {
             path: "/contactus",
             menuItem: "Contact Us"
+        },
+        {
+            path: "/supplier",
+            menuItem: "Supplier"
         }
     ]
 
