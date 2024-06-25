@@ -1,81 +1,19 @@
-import axios from "axios";
 import { Form, Formik } from "formik";
-import React, { useEffect, useState } from "react";
-import { baseUrl } from "../utils/baseUrls";
 
 const Supplier = () => {
-  const [supplier, setSupplier] = useState([]);
-  const [singleSupplier, setSingleSupplier] = useState(null);
-
-  const getSupplierData = async () => {
-    try {
-      const response = await axios.get(`${baseUrl}/supplier/get`);
-      setSupplier(response?.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getSupplierData();
-  }, []);
-
-  const postSupplier = async (values) => {
-    try {
-      await axios.post(`${baseUrl}/supplier/post`, values);
-      getSupplierData();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getSingleRecord = async (id) => {
-    try {
-      const response = await axios.get(`${baseUrl}/supplier/get/${id}`);
-      setSingleSupplier(response?.data?.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const updateSupplier = async (id, values) => {
-    try {
-      await axios.patch(`${baseUrl}/supplier/update/${id}`, values);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const deleteSupplier = async (id) => {
-    try {
-      await axios.delete(`${baseUrl}/supplier/delete/${id}`);
-      getSupplierData();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const initialValue = {
-    supplier_Category: singleSupplier?.supplier_Category || "",
-    supplier_Name: singleSupplier?.supplier_Name || "",
-    contact_Number: singleSupplier?.contact_Number || "",
-    currency: singleSupplier?.currency || "",
-    roe: singleSupplier?.roe || "",
-    commision: singleSupplier?.commision || "",
-    email: singleSupplier?.email || "",
-    address: singleSupplier?.address || "",
+    supplier_Category: "",
+    supplier_Name: "",
+    contact_Number: "",
+    currency: "",
+    roe: "",
+    commision: "",
+    email: "",
+    address: "",
   };
 
   const handlSubmit = (values, { resetForm }) => {
-    if (singleSupplier?.id) {
-      const id = singleSupplier?.id;
-      updateSupplier(id, values);
-      setSingleSupplier(null);
-      resetForm();
-    } else {
-      postSupplier(values);
-      resetForm();
-    }
+    console.log(values);
   };
 
   return (
@@ -192,8 +130,11 @@ const Supplier = () => {
               </div>
 
               <div className="flex justify-center">
-                <button type="submit" className="bg-blue-500 rounded-md px-10 py-2">
-                  {singleSupplier?.id ? "Update" : "Save"}
+                <button
+                  type="submit"
+                  className="bg-blue-500 rounded-md px-10 py-2"
+                >
+                  Save
                 </button>
               </div>
             </div>
@@ -217,48 +158,20 @@ const Supplier = () => {
             </tr>
           </thead>
           <tbody>
-            {supplier?.map((data, index) => (
-              <tr key={index}>
-                <td className="border border-gray-300">
-                  {data?.supplier_Category}
-                </td>
-                <td className="border border-gray-300">
-                  {data?.supplier_Name}
-                </td>
-                <td className="border border-gray-300">
-                  {data?.contact_Number}
-                </td>
-                <td className="border border-gray-300">{data?.currency}</td>
-                <td className="border border-gray-300">{data?.roe}</td>
-                <td className="border border-gray-300">{data?.commision}</td>
-                <td className="border border-gray-300 whitespace-normal break-words ">
-                  {data?.email}
-                </td>
-                <td className="border border-gray-300 break-words">
-                  {data?.address}
-                </td>
-                <td className="border border-gray-300">
-                  <div
-                    className="text-green-500 cursor-pointer "
-                    onClick={() => {
-                      getSingleRecord(data?.id);
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }}
-                  >
-                    Edit
-                  </div>
-                  <div
-                    className="text-red-500 cursor-pointer"
-                    onClick={() => {
-                      const id = data?.id;
-                      deleteSupplier(id);
-                    }}
-                  >
-                    Delete
-                  </div>
-                </td>
-              </tr>
-            ))}
+            <tr>
+              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300"></td>
+              <td className="border border-gray-300 whitespace-normal break-words "></td>
+              <td className="border border-gray-300 break-words"></td>
+              <td className="border border-gray-300">
+                <div className="text-green-500 cursor-pointer ">Edit</div>
+                <div className="text-red-500 cursor-pointer">Delete</div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
