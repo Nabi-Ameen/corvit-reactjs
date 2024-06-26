@@ -1,19 +1,62 @@
 import { Form, Formik } from "formik";
+import { baseUrl } from "../utils/baseUrls";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Supplier = () => {
+  const [supplier, setSupplier] = useState([]);
+  const [singleSupplier, setSingleSupplier] = useState({});
+
+  console.log("singleSupplier", singleSupplier);
+  console.log("supplier", supplier);
+
   const initialValue = {
-    supplier_Category: "",
-    supplier_Name: "",
-    contact_Number: "",
-    currency: "",
-    roe: "",
-    commision: "",
-    email: "",
-    address: "",
+    supplier_Category: singleSupplier?.supplier_Category || "",
+    supplier_Name: singleSupplier?.supplier_Name || "",
+    contact_Number: singleSupplier?.contact_Number || "",
+    currency: singleSupplier?.currency || "",
+    roe: singleSupplier?.roe || "",
+    commision: singleSupplier?.commision || "",
+    email: singleSupplier?.email || "",
+    address: singleSupplier?.address || "",
   };
 
-  const handlSubmit = (values, { resetForm }) => {
-    console.log(values);
+  const getSupplier = async () => {
+    const res = await axios.get(`${baseUrl}/supplier/get`);
+    setSupplier(res?.data);
+  };
+
+  useEffect(() => {
+    getSupplier();
+  }, []);
+
+  const createSupplier = async (values) => {
+    await axios.post(`${baseUrl}/supplier/post`, values);
+  };
+
+  const updateSupplier = async (id, values) => {
+    await axios.patch(`${baseUrl}/supplier/update/${id}`, values);
+    getSupplier();
+    setSingleSupplier({});
+  };
+
+  const getUnique = async (id) => {
+    console.log("id", id);
+    const singleSupplier = await axios.get(`${baseUrl}/supplier/get/${id}`);
+    setSingleSupplier(singleSupplier?.data?.data);
+  };
+
+  const handleSubmit = (values, { resetForm }) => {
+    if (singleSupplier?.id) {
+      const id = singleSupplier?.id;
+      updateSupplier(id, values);
+      resetForm({ values: initialValue });
+    } else {
+      createSupplier(values);
+      getSupplier();
+      resetForm({ values: initialValue });
+    }
+    setSingleSupplier({});
   };
 
   return (
@@ -24,8 +67,8 @@ const Supplier = () => {
 
       <Formik
         initialValues={initialValue}
-        onSubmit={handlSubmit}
-        enableReinitialize
+        onSubmit={handleSubmit}
+        enableReinitialize={true}
       >
         {({ values, setFieldValue }) => (
           <Form>
@@ -132,9 +175,9 @@ const Supplier = () => {
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="bg-blue-500 rounded-md px-10 py-2"
+                  className="bg-blue-500 rounded-md px-10 py-2 text-white"
                 >
-                  Save
+                  {singleSupplier?.id ? "Update" : "Save"}
                 </button>
               </div>
             </div>
@@ -158,20 +201,42 @@ const Supplier = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="border border-gray-300"></td>
-              <td className="border border-gray-300"></td>
-              <td className="border border-gray-300"></td>
-              <td className="border border-gray-300"></td>
-              <td className="border border-gray-300"></td>
-              <td className="border border-gray-300"></td>
-              <td className="border border-gray-300 whitespace-normal break-words "></td>
-              <td className="border border-gray-300 break-words"></td>
-              <td className="border border-gray-300">
-                <div className="text-green-500 cursor-pointer ">Edit</div>
-                <div className="text-red-500 cursor-pointer">Delete</div>
-              </td>
-            </tr>
+            {supplier?.map((supp, index) => {
+              return (
+                <tr key={index}>
+                  <td className="border border-gray-300">
+                    {supp?.supplier_Category}
+                  </td>
+                  <td className="border border-gray-300">
+                    {supp?.supplier_Name}
+                  </td>
+                  <td className="border border-gray-300">
+                    {supp?.contact_Number}
+                  </td>
+                  <td className="border border-gray-300">{supp?.currency}</td>
+                  <td className="border border-gray-300">{supp?.roe}</td>
+                  <td className="border border-gray-300">{supp?.commision}</td>
+                  <td className="border border-gray-300 whitespace-normal break-words ">
+                    {supp?.email}
+                  </td>
+                  <td className="border border-gray-300 break-words">
+                    {supp?.address}
+                  </td>
+                  <td className="border border-gray-300">
+                    <div
+                      className="text-green-500 cursor-pointer "
+                      onClick={() => {
+                        getUnique(supp?.id);
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                    >
+                      Edit
+                    </div>
+                    <div className="text-red-500 cursor-pointer">Delete</div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
